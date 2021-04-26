@@ -41,35 +41,6 @@ public class Test828 {
     }
 
 
-    public int uniqueLetterString2(String s) {
-        int sum = 0;
-        ArrayList<Integer>[] flags = new ArrayList[26];
-        for (int i = 0; i < flags.length; i ++) { flags[i] = new ArrayList<>(); }
-        char[] chs = s.toCharArray();
-        for (int i = 0; i < chs.length; i ++) {
-            int charIndex = chs[i] - 'A';
-            int size = flags[charIndex].size();
-            if (size == 1) {
-                // 已经有一个chs[i]存在了，那么会有flags[charIndex].get(size - 1) 个子串的独立字符-1
-//                sum -= flags[charIndex].get(size - 1);
-                int last = flags[charIndex].get(size - 1);
-                sum += (1 + (i - last)) * (i - last) / 2;
-                // sum -= last;
-//                sum +=
-
-            } else if (size == 0) {
-                // 没有chs[i]存在，所以闭区间[j, i], j = 0, 1, 2...i的范围内的字串独立字符数量+1
-//                sum += i + 1;
-                sum += (1 + (i + 1)) * (i + 1) / 2;
-            }
-            System.out.println("size = " + size + ", sum = " + sum);
-
-            flags[charIndex].add(i);
-
-        }
-        return sum;
-    }
-
     public int uniqueLetterString3(String s) {
         // 该思路是uniqueLetterString1的优化版本。
         if (null == s || s.length() <= 0) { return 0; }

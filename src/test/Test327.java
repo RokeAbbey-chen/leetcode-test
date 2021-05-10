@@ -22,7 +22,7 @@ public class Test327 {
             }
             Integer dulpCount = maps[i & 1].get(numI);
             if (null == dulpCount) { dulpCount = 0; }
-            maps[i & 1].put((long)numI, dulpCount + 1);
+            maps[i & 1].put(numI, dulpCount + 1);
             if (numI >= lower && numI <= upper) {
                 count ++;
             }

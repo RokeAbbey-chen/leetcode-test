@@ -107,6 +107,8 @@ public class Test307 {
         }
     }
 
+
+
     public static void main(String[] args) {
         int[] nums = {7, 2, 7, 2, 0};
         NumArray arr = new NumArray(nums);

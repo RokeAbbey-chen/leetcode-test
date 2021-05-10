@@ -45,11 +45,11 @@ public class Test828 {
         // 该思路是uniqueLetterString1的优化版本。
         if (null == s || s.length() <= 0) { return 0; }
         char[] chs = s.toCharArray();
-        ArrayList<Integer>[] flags = new ArrayList[26];
+        ArrayList<Short>[] flags = new ArrayList[26];
         for (int i = 0; i < 26; i ++) { flags[i] = new ArrayList<>(); }
         int sum0 = 0;
         int sum1 = 0;
-        for (int i = 0; i < chs.length; i ++) {
+        for (short i = 0; i < chs.length; i ++) {
             int charIndex = chs[i] - 'A';
             int size = flags[charIndex].size();
             if (size == 0) {

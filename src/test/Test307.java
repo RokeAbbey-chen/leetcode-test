@@ -59,16 +59,12 @@ public class Test307 {
              * @return
              */
             public int sumFromLeftest(int index) {
-                if (index <= -1) {
-                    return 0;
-                }
+                if (index <= -1) { return 0; }
                 int sum = 0;
                 int nodeIndex = 0;
-                for (int left = 0, right = oldNums.length - 1, mid = (left + right) >> 1; ; mid = (left + right) >> 1) {
-                    if (left == right) {
-                        sum += nodes[nodeIndex];
-                        break;
-                    }
+                for (int left = 0, right = oldNums.length - 1, mid = (left + right) >> 1;
+                        ; mid = (left + right) >> 1) {
+                    if (left == right) { sum += nodes[nodeIndex]; break; }
                     if (index > mid) {
                         nodeIndex = (nodeIndex << 1) + 2;
                         sum += nodes[nodeIndex - 1];

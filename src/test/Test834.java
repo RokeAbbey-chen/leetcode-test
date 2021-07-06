@@ -8,15 +8,7 @@ import java.util.HashSet;
 public class Test834 {
     public int[] sumOfDistancesInTree(int n, int[][] edges) {
         if (edges.length < 1) { return new int[]{0}; }
-        swap(edges);
-        Arrays.sort(edges, (o1, o2) -> {
-            if (o1[0] < o2[0]) {
-                return -1;
-            } else if (o1[0] > o2[0]) {
-                return 1;
-            }
-            return 0;
-        });
+
         HashMap<Integer, Node> nodes = new HashMap<>();
         nodes.put(edges[0][0], new Node(-1, 1, 0, 2));
         nodes.put(edges[0][1], new Node(edges[0][0], 1, 1, 2));
@@ -32,13 +24,12 @@ public class Test834 {
             int len = getPath(nodes, path, parent);
             promise(nodes, path, len);
             add(nodes, path, len, me);
-
-
         }
 
         HashSet<Integer> notLeaves = new HashSet<>();
         for (int i = edges.length - 1; i >= 0; i--) {
             if (notLeaves.contains(edges[i][1])) {
+                notLeaves.add(edges[i][0]);
                 continue;
             }
             int len = getPath(nodes, path, edges[i][1]);
@@ -47,9 +38,9 @@ public class Test834 {
         }
 
         for (int i = 0; i < edges.length; i++) {
-            dis[i + 1] = nodes.get(edges[i][1]).dis;
+            dis[edges[i][1]] = nodes.get(edges[i][1]).dis;
         }
-        dis[0] = nodes.get(0).dis;
+        dis[edges[0][0]] = nodes.get(edges[0][0]).dis;
         return dis;
     }
 
@@ -146,8 +137,10 @@ public class Test834 {
 //        int n = 4;
 //        int n = 3;
 //        int[][] edges = {{2, 0}, {1, 0}};
-        int n = 3;
-        int[][] edges = {{2, 1}, {0, 2}};
+//        int n = 3;
+//        int[][] edges = {{2, 1}, {0, 2}};
+        int n = 9;
+        int[][] edges = {{1,0},{2,0}, {0,3}, {2,4}, {4,5},{3,6}, {8,7},{7,6}};
 
         int[] result = t.sumOfDistancesInTree(n, edges);
         for (int i : result) {

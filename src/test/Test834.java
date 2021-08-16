@@ -137,10 +137,10 @@ public class Test834 {
 //        int n = 4;
 //        int n = 3;
 //        int[][] edges = {{2, 0}, {1, 0}};
-//        int n = 3;
-//        int[][] edges = {{2, 1}, {0, 2}};
-        int n = 9;
-        int[][] edges = {{1,0},{2,0}, {0,3}, {2,4}, {4,5},{3,6}, {8,7},{7,6}};
+        int n = 3;
+        int[][] edges = {{2, 1}, {0, 2}};
+//        int n = 9;
+//        int[][] edges = {{1,0},{2,0}, {0,3}, {2,4}, {4,5},{3,6}, {8,7},{7,6}};
 
         int[] result = t.sumOfDistancesInTree(n, edges);
         for (int i : result) {

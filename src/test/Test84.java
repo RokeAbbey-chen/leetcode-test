@@ -5,40 +5,44 @@ import java.util.List;
 import java.util.Stack;
 
 public class Test84 {
+    /**
+     * 思路， 使用线段树计算任意区间[start, end]的最小值(最小高), 记作h,  然后以 (end - start + 1) * h作为候选面积。
+     * @param heights:
+     * @return:
+     */
     public int largestRectangleArea(int[] heights) {
         SegTree segTree = new SegTree(heights);
-        Stack<int[]> stack = new Stack<>();
+        LinkedList<int[]> queue = new LinkedList<>();
         int[] pair = new int[]{0, heights.length - 1};
-        stack.add(pair);
+        queue.add(pair);
         int maxArea = 0;
-        while (!stack.isEmpty()) {
-            pair = stack.pop();
-            System.out.println("pop:" + pair[0] + ", " + pair[1]);
+        while (!queue.isEmpty()) {
+            pair = queue.removeFirst();
             List<Integer> heightIndexes = segTree.findMinIndexes(pair[0], pair[1]);
-            maxArea = Math.max(heightIndexes.get(0) * (pair[1] - pair[0] + 1), maxArea);
-            int start = 0;
+            maxArea = Math.max(heights[heightIndexes.get(0)] * (pair[1] - pair[0] + 1), maxArea);
+            int start = pair[0];
             int end = -1;
+
             Iterator<Integer> iter = heightIndexes.iterator();
             assert heightIndexes.size() >= 1;
             int[] pair2;
+
             while (iter.hasNext()){
                 end = iter.next();
-                pair2 = new int[]{start, end};
-                System.out.println("in push start:" + stack + ", end:" + end);
-                stack.push(pair2);
-                start = end;
+                if (start <= end - 1) {
+                    pair2 = new int[]{start, end - 1};
+                    queue.addLast(pair2);
+                    start = end + 1;
+                } else {
+                    start = end + 1;
+                }
             }
-            if (end == -1) {
-                continue;
-            }
+            if (end == -1) continue;
             start = end + 1;
             end = pair[1];
-            if (start > end) {
-                continue;
-            }
+            if (start > end) continue;
             pair2 = new int[]{start, end};
-            System.out.println("out push start:" + stack + ", end:" + end);
-            stack.push(pair2);
+            queue.addLast(pair2);
         }
         return maxArea;
     }
@@ -88,7 +92,7 @@ public class Test84 {
                 return findMinIndexes(start, end, node.right, mid + 1, nodeEnd);
             }
             if (end <= mid) {
-                return findMinIndexes(start, end, node.left, nodeStart, end);
+                return findMinIndexes(start, end, node.left, nodeStart, mid);
             }
 
             List<Integer> leftMinIndexes, rightMinIndexes;
@@ -101,8 +105,10 @@ public class Test84 {
             } else if (values[leftIndex] > values[rightIndex]) {
                 return rightMinIndexes;
             } else {
-                System.err.println("left eq right  error!!!");
-                return null;
+                LinkedList<Integer> tmp = new LinkedList<>();
+                tmp.addAll(leftMinIndexes);
+                tmp.addAll(rightMinIndexes);
+                return tmp;
             }
         }
 
@@ -151,13 +157,19 @@ public class Test84 {
         int[] values = {3, 1, 2, 9, 4, 2, 1, 2, 5, 7, 7 , 12, 9, 97, 88, 54, 32, 12};
 //        int []values = {7, 6, 1, 8, 2, 3, 9, 5};
         Test84.SegTree tree = new Test84.SegTree(values);
-        System.out.println(tree.findMinIndexes(0, values.length - 1));
-        System.out.println(tree.findMinIndexes(11, 15));
+        System.out.println(tree.findMinIndexes(0, 0));
+//        System.out.println(tree.findMinIndexes(0, values.length - 1));
+//        System.out.println(tree.findMinIndexes(11, 15));
     }
 
     public static void main2() {
-        int[] values = {3, 1, 2, 9, 4, 2, 1, 2, 5, 7, 7 , 12, 9, 97, 88, 54, 32, 12};
-//        int []values = {7, 6, 1, 8, 2, 3, 9, 5};
+//        int[] values = {3, 1, 2, 9, 4, 2, 1, 2, 5, 7, 7 , 12, 9, 97, 88, 54, 32, 12};
+//        int[] values = {7, 6, 1, 8, 2, 3, 9, 5};
+        int[] values = {4, 2, 3};
+//        int[] values = new int[20000];
+//        for (int i = 0; i < values.length; i ++) {
+//            values[i] = 1;
+//        }
         Test84 test84 = new Test84();
         System.out.println(test84.largestRectangleArea(values));
     }

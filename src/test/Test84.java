@@ -165,7 +165,8 @@ public class Test84 {
     public static void main2() {
 //        int[] values = {3, 1, 2, 9, 4, 2, 1, 2, 5, 7, 7 , 12, 9, 97, 88, 54, 32, 12};
 //        int[] values = {7, 6, 1, 8, 2, 3, 9, 5};
-        int[] values = {4, 2, 3};
+//        int[] values = {4, 2, 3};
+        int[] values = {3, 2, 1, 2, 3, 7, 8, 5, 3, 2, 8, 3, 8, 2, 9};
 //        int[] values = new int[20000];
 //        for (int i = 0; i < values.length; i ++) {
 //            values[i] = 1;

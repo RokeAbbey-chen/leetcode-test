@@ -13,10 +13,6 @@ import java.util.*;
  */
 public class Test127 {
 
-//    private HashMap<Integer, int[]> costMap = new HashMap<>();
-//
-//    private HashMap<Integer, Integer> heuristic = new HashMap<>();
-
 
     public int ladderLength(String beginWord, String endWord, List<String> wordList) {
         char[][] wordCH = new char[wordList.size() + 1][];
@@ -37,7 +33,7 @@ public class Test127 {
     private int search(int beginIndex, int endIndex, char[][] wordList) {
         HashSet<Integer> noReCursive = new HashSet<>();
         LinkedList<int[]> queue = new LinkedList<>();
-        queue.push(new int[]{beginIndex, 1});
+        queue.push(new int[]{beginIndex, 1, -1});
         noReCursive.add(beginIndex);
 
         while (!queue.isEmpty()) {
@@ -46,13 +42,21 @@ public class Test127 {
             int level = pair[1];
             LinkedList<Integer> successors = getSuccessors(nodeIndex, wordList);
             for (Integer suc : successors) {
-                if (suc.equals(endIndex)) return level + 1;
+                if (suc.equals(endIndex)) {
+                    return level + 1;
+                }
                 if (noReCursive.contains(suc)) continue;
-                queue.push(new int[]{suc, level + 1});
+                queue.addLast(new int[]{suc, level + 1, nodeIndex});
                 noReCursive.add(suc);
             }
         }
         return 0;
+    }
+
+    private void printAllPredecessor(int endIndex, int[] predecessor, char[][] wordList) {
+        for (int index = endIndex;predecessor[index] != -1; index = predecessor[index]) {
+            System.out.println(new String(wordList[index]));
+        }
     }
 
     private LinkedList<Integer> getSuccessors(int index, char[][] wordList) {

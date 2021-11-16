@@ -79,8 +79,9 @@ public class Test127 {
     }
 
     public static void main(String[] args) {
-        Test127 t = new Test127();
+        Test127_2 t = new Test127_2();
         int result;
+//        result = t.ladderLength("hit", "hog", Arrays.asList("hig", "hog"));
 //        result = t.ladderLength("hit", "cog", Arrays.asList("hot","dot","dog","lot","log","cog"));
 //        result = t.ladderLength("hit", "cog", Arrays.asList("hot","dot","dog","lot","log"));
 //        result = t.ladderLength("red", "tax", Arrays.asList("ted","tex","red","tax","tad","den","rex","pee"));

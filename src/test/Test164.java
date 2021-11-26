@@ -26,7 +26,6 @@ public class Test164 {
 
         for (int i = 0; i < nums.length; i ++) {
             int idx = (nums[i] - min) / bucketSize;
-//            System.out.println("i = " + i + ",  idx = " + idx);
             bucketMax[idx] = Math.max(nums[i], bucketMax[idx]);
             bucketMin[idx] = Math.min(nums[i], bucketMin[idx]);
         }
@@ -35,7 +34,7 @@ public class Test164 {
         int curMin  = Integer.MAX_VALUE;
         int lastMax = bucketMax[0];
         for (int i = 1; i < bucketCount; i ++) {
-            curMin = bucketMin[i]; //Math.min(curMin, bucketMin[i]);
+            curMin = bucketMin[i];
             if (Integer.MAX_VALUE == curMin) continue;
             maxGap = Math.max(maxGap, curMin - lastMax);
             lastMax = Math.max(bucketMax[i], Integer.MIN_VALUE);
@@ -49,6 +48,7 @@ public class Test164 {
 //        int[] nums = new int[]{8, 1, 2, 8, 12, 7};
 //        int[] nums = new int[]{8};
         int[] nums = new int[]{3, 6, 9, 100, 97, 10, 297, 12681, 8737, 1821, 4000, 0};
+                            // 0  3  6  9    10  97  100  297    1821  4000  8737  12681
                             // 0  0  0  0    0   0   0    11     8     1     3     0
         int gap = t.maximumGap(nums);
         System.out.println("gap:" + gap);

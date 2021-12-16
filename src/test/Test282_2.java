@@ -17,7 +17,7 @@ public class Test282_2 {
         while (deno > 0) {
             long f = secondFactor / deno;
             long s = secondFactor % deno;
-            if (f <= 0) continue;
+            if (f == 0) continue;
             calc(firstFactor, secondFactor, lastOp, false);
 
         }

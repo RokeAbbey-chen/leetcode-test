@@ -13,13 +13,15 @@ public class Test282_2 {
         if (wholeValue == target) ans.add(exp);
 
         long deno = (long)1e10;
-
+        char[] ops = {'+', '-', '*'};
         while (deno > 0) {
             long f = secondFactor / deno;
             long s = secondFactor % deno;
             if (f == 0) continue;
-            calc(firstFactor, secondFactor, lastOp, false);
-
+            wholeValue -= calc(firstFactor, secondFactor, lastOp, false);
+            for (char op : ops) {
+                long newWhole = wholeValue + calc(firstFactor, f,)
+            }
         }
     }
 

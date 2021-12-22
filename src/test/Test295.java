@@ -9,17 +9,14 @@ public class Test295 {
     public static class MedianFinder {
         private boolean added = false;
         private double lastMedian = Integer.MAX_VALUE;
-        private List<Integer> nums;
         private RBTree2 tree;
         public MedianFinder() {
             tree = new RBTree2();
-            nums = new ArrayList<>();
         }
 
         public void addNum(int num) {
             added = true;
             tree.add(num);
-            nums.add(num);
         }
 
         public double findMedian() {
@@ -35,17 +32,6 @@ public class Test295 {
             }
             return lastMedian;
 
-        }
-
-        public double findMedian2() {
-            Collections.sort(nums);
-            if ((nums.size() & 1) == 0) {
-                int index = nums.size() - 1 >> 1;
-                return (nums.get(index) + nums.get(index + 1)) / 2.0;
-            } else {
-                int index = nums.size() - 1 >> 1;
-                return nums.get(index);
-            }
         }
 
         /**
@@ -71,153 +57,9 @@ public class Test295 {
         }
     }
 
-    private static class RBTree {
-        private Node root = new Node(Integer.MAX_VALUE, 1, Node.COLOR_BLACK, null);
-        public RBTree() {
-
-        }
-
-        public void add(int number) {
-            Node node = root;
-            Node parent = root;
-            boolean bLeft = false; // true为左
-            while (node != null) {
-                if (number < node.value) {
-                    parent = node;
-                    parent.sonCount ++;
-                    node = node.left;
-                    bLeft = true;
-                } else if (number > node.value) {
-                    parent = node;
-                    parent.sonCount ++;
-                    node = node.right;
-                    bLeft = false;
-                } else {
-                    node.count ++;
-                    break;
-                }
-            }
-
-            if (null == node) {
-                node = new Node(number, 1, Node.COLOR_RED, parent);
-                if (bLeft) {
-                    parent.left = node;
-                } else {
-                    parent.right = node;
-                }
-                adjust(node);
-            }
-
-        }
-
-        private void adjust(Node node) {
-            while (node != root && node != null) {
-                if (node == root.left) {
-                    node.color = Node.COLOR_BLACK;
-                    break;
-                }
-
-                Node parent = node.parent;
-                Node pparent = parent.parent;
-
-                if (Node.COLOR_RED == parent.color) {
-                    if (pparent.left == parent && parent.right == node) {
-                        /*一左一右*/
-                        parent = translate(parent, true);
-                        node = parent.left;
-                    } else if (pparent.right == parent && parent.left == node) {
-                        /*一右一左*/
-                        parent = translate(parent, false);
-                        node = parent.right;
-                    }
-                    node.color = Node.COLOR_BLACK;
-                    node = translate(pparent, pparent.left != parent);
-                } else {
-                    break;
-                }
-            }
-        }
-
-        /**
-         *
-         * @param node 以node为中心，向某个方向转
-         * @param director 向左转为true
-         */
-        private Node translate(Node node, boolean director) {
-            Node parent = node.parent;
-            if (director) {
-                Node right = node.right;
-                assert right != null;
-                if (node == parent.left) parent.left = right;
-                else parent.right = right;
-                right.parent = parent;
-
-                node.sonCount -= right.count + right.sonCount;
-                if (right.left != null) {
-                    node.sonCount += right.left.count + right.left.sonCount;
-                    right.sonCount -= right.left.count + right.left.sonCount;
-                    right.left.parent = node;
-                }
-                right.sonCount += node.count + node.sonCount;
-                node.right = right.left;
-                right.left = node;
-                node.parent = right;
-                return right;
-            } else {
-                Node left = node.left;
-                assert left != null;
-                if (parent.right == node) parent.right = left;
-                else parent.left = node.left;
-                left.parent = parent;
-
-                node.sonCount -= left.count + left.sonCount;
-                if (left.right != null) {
-                    left.sonCount -= left.right.sonCount + left.right.count;
-                    node.sonCount += left.right.sonCount + left.right.count;
-                    left.right.parent = node;
-                }
-                left.sonCount += node.count + node.sonCount;
-                node.left = left.right;
-                left.right = node;
-                node.parent = left;
-                return left;
-            }
-        }
-
-        private static class Node {
-            static final boolean COLOR_BLACK = false;
-            static final boolean COLOR_RED = true;
-            Node left;
-            Node right;
-            Node parent;
-            int value;
-            int sonCount;
-            int count;
-            boolean color;
-
-            public Node(int value, int count, boolean color, Node parent) {
-                this.value = value;
-                this.sonCount = 0;
-                this.count = count;
-                this.color = color;
-                this.parent = parent;
-            }
-
-            @Override
-            public String toString() {
-                return "Node{" +
-                        "value=" + value +
-                        ", sonCount=" + sonCount +
-                        ", count=" + count +
-                        ", color=" + color +
-                        '}';
-            }
-        }
-    }
-
     private static class RBTree2 {
 
-        private Node root = new Node(Integer.MAX_VALUE, 1, Node.BLACK, null);
+        public Node root = new Node(Integer.MAX_VALUE, 1, Node.BLACK, null);
 
         public void add(int number) {
 
@@ -312,25 +154,7 @@ public class Test295 {
                 this.color = color;
                 this.sonCount = 0;
             }
-
-            @Override
-            public String toString() {
-                return "Node{" +
-                        "color=" + color +
-                        ", value=" + value +
-                        ", count=" + count +
-                        ", sonCount=" + sonCount +
-                        '}';
-            }
-
-            public String theWholeTree() {
-                String sonsString = sons[0] != null ? ", left:" + sons[0].theWholeTree(): "";
-                sonsString += sons[1] != null ? ", right:" + sons[1].theWholeTree(): "";
-                return "{" + "color:" + color + ", value:" + value + ", count:" + count
-                        + ", sonCount:" + sonCount + sonsString + "}";
-            }
         }
-
     }
 
     public static void main(String[] args) {
@@ -344,7 +168,6 @@ public class Test295 {
             int v = random.nextInt(100);
             inps.add(v);
             finder.addNum(v);
-            System.out.println("ans:" + finder.findMedian() + ", " + finder.findMedian2());
         }
 //        System.out.println(finder.tree.root.theWholeTree());
         System.out.println(finder.findMedian());

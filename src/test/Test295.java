@@ -20,9 +20,7 @@ public class Test295 {
         }
 
         public double findMedian() {
-            if (!added) {
-                return lastMedian;
-            }
+            if (!added) return lastMedian;
 
             int totalCount = tree.root.sonCount;
             if ((totalCount & 1) == 0) {
@@ -103,7 +101,6 @@ public class Test295 {
                 node.color = Node.BLACK;
                 byte dir = pp.sons[0] == p ? (byte)1: (byte)0;
                 node = translate(pp, dir);
-
             }
 
         }
@@ -134,8 +131,6 @@ public class Test295 {
         }
 
         public static class Node {
-            public static final byte LEFT = 0;
-            public static final byte RIGHT = 1;
             public static final boolean BLACK = false;
             public static final boolean RED = true;
 
@@ -162,17 +157,12 @@ public class Test295 {
         Random random = new Random(1);
         ArrayList<Integer> inps = new ArrayList<>();
         for (int i = 0; i < 100; i ++) {
-            if (17 == i) {
-                System.out.println("313");
-            }
             int v = random.nextInt(100);
             inps.add(v);
             finder.addNum(v);
         }
 //        System.out.println(finder.tree.root.theWholeTree());
         System.out.println(finder.findMedian());
-        finder.find(7);
-
 
     }
 }

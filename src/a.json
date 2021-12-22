@@ -1,0 +1,114 @@
+{
+  color: false,
+  value: 2147483647,
+  count: 1,
+  sonCount: 20,
+  left: {
+    color: false,
+    value: 69,
+    count: 1,
+    sonCount: 19,
+    left: {
+      color: true,
+      value: 17,
+      count: 1,
+      sonCount: 11,
+      left: {
+        color: false,
+        value: 6,
+        count: 1,
+        sonCount: 2,
+        left: {
+          color: false,
+          value: 4,
+          count: 1,
+          sonCount: 0
+        },
+        right: {
+          color: false,
+          value: 13,
+          count: 1,
+          sonCount: 0
+        }
+      },
+      right: {
+        color: false,
+        value: 47,
+        count: 1,
+        sonCount: 7,
+        left: {
+          color: false,
+          value: 34,
+          count: 2,
+          sonCount: 0
+        },
+        right: {
+          color: true,
+          value: 62,
+          count: 2,
+          sonCount: 3,
+          left: {
+            color: false,
+            value: 54,
+            count: 1,
+            sonCount: 1,
+            left: {
+              color: true,
+              value: 48,
+              count: 1,
+              sonCount: 0
+            }
+          },
+          right: {
+            color: false,
+            value: 63,
+            count: 1,
+            sonCount: 0
+          }
+        }
+      }
+    },
+    right: {
+      color: false,
+      value: 78,
+      count: 1,
+      sonCount: 6,
+      left: {
+        color: false,
+        value: 73,
+        count: 1,
+        sonCount: 0
+      },
+      right: {
+        color: true,
+        value: 88,
+        count: 1,
+        sonCount: 4,
+        left: {
+          color: false,
+          value: 85,
+          count: 1,
+          sonCount: 0
+        },
+        right: {
+          color: false,
+          value: 92,
+          count: 1,
+          sonCount: 2,
+          left: {
+            color: true,
+            value: 89,
+            count: 1,
+            sonCount: 0
+          },
+          right: {
+            color: true,
+            value: 96,
+            count: 1,
+            sonCount: 0
+          }
+        }
+      }
+    }
+  }
+}

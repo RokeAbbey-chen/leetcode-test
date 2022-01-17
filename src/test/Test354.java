@@ -15,15 +15,12 @@ Given envelopes = [[5,4],[6,4],[6,7],[2,3]], the maximum number of envelopes you
 * */
 public class Test354 {
     public int maxEnvelopes(int[][] envelopes) {
-        Arrays.sort(envelopes, new Comparator<int[]>() {
-            @Override
-            public int compare(int[] o1, int[] o2) {
-                if (o1[0] == o2[0]){
-                    return o2[1] - o1[1];
-                }
-                else {
-                    return o1[0] - o2[0];
-                }
+        Arrays.sort(envelopes, (o1, o2) -> {
+            if (o1[0] == o2[0]){
+                return o2[1] - o1[1];
+            }
+            else {
+                return o1[0] - o2[0];
             }
         });
 

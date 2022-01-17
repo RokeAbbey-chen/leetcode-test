@@ -13,11 +13,13 @@ public class Test354_2 {
         for (int i = 0; i < indexes0[0].length; i ++) {
             /*在宽这个维度上从小到大找*/
             int wIndex = indexes0[0][i];
-            for (int j = indexes1[1][wIndex] - 1; j >= 0; j --) {
+            int count = 0;
+            for (int j = indexes1[1][wIndex] - 1; j >= 0 && count <= i; j --) {
                 int hIndex = indexes1[0][j];
                 if (envelopes[hIndex][1] >= envelopes[wIndex][1]
                         || envelopes[hIndex][0] >= envelopes[wIndex][0]) continue;
                 cache[wIndex] = Math.max(cache[hIndex] + 1, cache[wIndex]);
+                if (envelopes[hIndex][0] < envelopes[wIndex][0]) count++;
             }
             result = Math.max(cache[wIndex], result);
         }
@@ -59,12 +61,17 @@ public class Test354_2 {
     }
 
     public static void main(String[] args) {
-//        int[][] envs = new int[][]{{5,4},{6,4},{6,7},{2,3},{5,3},{4,2},{3,1}};
-        int[][] envs = new int[][]{{5,4},{6,4},{6,7},{2,3},{2,1},{5,5},{7,9}};
+        int[][] envs = new int[][]{{5,4},{6,4},{6,7},{2,3},{5,3},{4,2},{3,1}};
+//        int[][] envs = new int[][]{{5,4},{6,4},{6,7},{2,3},{2,1},{5,5},{7,9}};
 //        int[][] envs = new int[][]{{2,100},{3,200},{4,300},{5,500},{5,400},{5,250},{6,370},{6,360},{7,380}};
         
         Test354_2 t = new Test354_2();
         int result = t.maxEnvelopes(envs);
-        System.out.println(result);
+//        int result = 0;
+
+        Test354_3 t2 = new Test354_3();
+        int result2 = t2.maxEnvelopes(envs);
+
+        System.out.println(result + ", " + result2);
     }
 }

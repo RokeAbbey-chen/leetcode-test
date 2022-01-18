@@ -40,10 +40,7 @@ public class Test391 {
             }
         }
 
-
         return isBoundingRect(b, l, t, r, bltr) && isNoCover(bltr);
-
-
     }
 
     public static boolean checkConnect(ArrayList<int[]> edges, boolean perfect) {

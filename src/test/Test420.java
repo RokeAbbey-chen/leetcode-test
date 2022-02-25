@@ -26,8 +26,7 @@ public class Test420 {
                 repWhere[repLen ++] = i;
                 c2 = 0;
             }
-            c0 = c1;
-            c1 = c2;
+            c0 = c1; c1 = c2;
         }
 
         if (pwd.length <= 5){

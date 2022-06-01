@@ -21,28 +21,24 @@ public class Test440 {
 
         while (T > 0) {
             if (jinweiTime < numDigits && result * 10 <= n) {
-                result = 10 * result;// jinweiTime == 0? 1 : 10 * result;
+                result = 10 * result;
                 rank ++;
                 jinweiTime ++;
             }
 
             int i = jinweiTime == 1 ? 1 : 0;
             for (; rank <= k && i < 10; i ++){
-//                System.out.println("rank = " + rank + ", i = " + i);
-//                int firstNum = n % (10 * n3) / n3;
                 if (i < 9 &&
                     result * n3 + i * n3 >= n / n3 * n3 &&
                     rank + T - (1 * n3 - 1 - n % n3) <= k) {
                         rank += T - (1 * n3 - 1 - n % n3);//T - (n3 - 1 - n % n3);
                         T /= 10;
                         n3 /= 10;
-//                        System.out.println("T down. T = " + T + ", i = " + i);
                 } else rank += T;
             }
             rank -= T;
             i --;
             result += i;
-//            System.out.println("rank = " + rank + ", result = " + result + ", i = " + i);
             if (rank == k) {
                 return result;
             }

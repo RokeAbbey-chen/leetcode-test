@@ -398,16 +398,20 @@ public class Test480 {
 //        int[] nums = {1, 4, 2, 3};
 //        int k = 4;
         Random random = new Random(4195);
-        int[] nums = new int[50];
+        int[] nums = new int[(int)1e6];
         int k = 6;
-        for (int i = 0; i < 50; i ++) {
-            nums[i] = random.nextInt(100);
-            System.out.print(nums[i] + ", ");
+        for (int i = 0; i < nums.length; i ++) {
+//            nums[i] = random.nextInt(100);
+//            System.out.print(nums[i] + ", ");
+            nums[i] = nums.length - i;
         }
         System.out.println("--------------");
+        long start = System.currentTimeMillis();
         double[] result = t.medianSlidingWindow(nums, k);
+        long end = System.currentTimeMillis();
+        System.out.println("use time:" + (end - start));
         for (int i = 0; i < result.length; i ++) {
-            System.out.print(result[i] + ", ");
+//            System.out.print(result[i] + ", ");
         }
         System.out.println();
 

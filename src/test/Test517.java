@@ -21,14 +21,16 @@ public class Test517 {
         sum = mac[0];
         int notTogether = 0;
         int lastDir = 0;
+        int nums = 0;
         for (int i1 = 1; i1 < n; i1 ++) {
             needFilled += Math.max(0, avg - mac[i1]);
             needMove += Math.max(0, mac[i1] - avg);
             if (sum < avg * i1 && (sum + mac[i1] >= avg * (i1 + 1) || i1 + 1 < n && mac[i1] > avg && mac[i1 + 1] < avg)) {
 //            if (sum < avg * i1 && sum + mac[i1] >= avg * (i1 + 1) ) {
                 System.out.println("i1 = " + i1);
-//                if (sum + mac[i1] > avg * (i1 + 1)) notTogether += ;
-                notTogether = Math.max(notTogether, sum + mac[i1] - avg * (i1 + 1));
+//                notTogether = Math.max(notTogether, sum + mac[i1] - avg * (i1 + 1));
+                notTogether = Math.max(notTogether, avg * i1 - sum);
+
                 System.out.println("notTogether = " + notTogether);
 
                 int actualMove;
@@ -39,6 +41,7 @@ public class Test517 {
 //                left += actualMove;
 //                left = Math.max(left, actualMove + Math.max(0, left - Math.min(needFilled, needMove)));
                 left = Math.max(left, actualMove + Math.max(0, left - needFilled));
+                nums = Math.max(left, nums);
                 System.out.println("move left = " + left + ", actualMove = " + actualMove);
                 needFilled0 += needFilled - actualMove;
 //                needMove0 += needMove - actualMove;
@@ -52,8 +55,11 @@ public class Test517 {
                 System.out.println("nm = " + needMove + ", nm0 = " + needMove0);
                 int actualMove = Math.min(needMove + needMove0, needFilled);
                 right = Math.max(right, actualMove + Math.max(0, right - needMove));
+                nums = Math.max(right + notTogether, nums);
+                notTogether = 0;
                 System.out.println("move right = " + right+ ", actualMove = " + actualMove);
 //                needFilled0 += needFilled - actualMove;
+//                notTogether = 0;
                 needMove0 += needMove - actualMove;
                 needFilled -= actualMove;
                 needMove = 0;
@@ -61,7 +67,9 @@ public class Test517 {
 
             sum += mac[i1];
         }
-        return Math.max(Math.max(left, right), Math.min(left, right) + notTogether);
+//        return Math.max(left, right + notTogether);
+//        return Math.max(Math.max(left, right), Math.min(left, right) + notTogether);
+        return nums;
     }
     public static void main1(String[] args) {
         for (long i = Long.MAX_VALUE; i >= Long.MIN_VALUE; i --) {
@@ -81,9 +89,9 @@ public class Test517 {
 //        int[] nums = {4, 0, 0, 4};
 //        int[] nums = {0, 4, 12, 0};
 //        int[] nums = {0, 3, 10, 2, 7, 9, 4};
-//        int[] nums = {1, 0, 5, 7, 9, 10, 12, 4};
+        int[] nums = {1, 0, 5, 7, 9, 10, 12, 4};
 //        int[] nums = {1, 0, 5, 7, 9, 10, 12, 4, 24};
-        int[] nums = {0,0,10,0,0,0,10,0,0,0};
+//        int[] nums = {0,0,10,0,0,0,10,0,0,0};
         int result = t.findMinMoves(nums);
 
         System.out.println("result = " + result);

@@ -23,6 +23,8 @@ public class Test517_2 {
         sum = 0;
         int exclude = 0;
         int rest = 0;
+        int left = 0;
+        int[] nums = {1, 0, 5, 7, 9, 10, 12, 4, 24};
         for (int i = 0; i < n; i ++) {
             needFill += Math.max(avg - mac[i], 0);
             needMove += Math.max(mac[i] - avg, 0);
@@ -33,11 +35,14 @@ public class Test517_2 {
                     exclude = mac[i] - avg - rest;//(i + 1) * avg - sum;
                 }
                 int realMove = Math.min(needFill + needFill0, needMove);
-                moveTimes = Math.max(moveTimes, realMove + moveTimes - Math.min(needFill, realMove));
+//                moveTimes = Math.max(moveTimes, realMove - Math.min(needFill, realMove));
+                left = realMove + Math.max(0, left - Math.min(needFill, realMove));
+                moveTimes = Math.max(moveTimes, left);
                 needFill -= realMove;
                 needMove -= realMove;
                 needFill0 += needFill;
                 needMove0 += needMove;
+                needFill = 0; needMove = 0;
             } else if (sum > i * avg && (sum + mac[i] <= (i + 1) * avg
                     || (i + 1) < n && mac[i] <= avg && mac[i + 1] > avg)) {
                 int realMove = Math.min(needFill, needMove + needMove0);
@@ -46,6 +51,7 @@ public class Test517_2 {
                 needFill -= realMove;
                 needMove0 += needMove;
                 needFill0 += needFill;
+                needFill = 0; needMove = 0;
                 if (realMove >= exclude) rest = Math.max(rest + exclude - realMove, 0);
                 if (0 == rest) exclude = 0;
             }

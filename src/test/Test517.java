@@ -89,9 +89,10 @@ public class Test517 {
 //        int[] nums = {4, 0, 0, 4};
 //        int[] nums = {0, 4, 12, 0};
 //        int[] nums = {0, 3, 10, 2, 7, 9, 4};
-        int[] nums = {1, 0, 5, 7, 9, 10, 12, 4};
+//        int[] nums = {1, 0, 5, 7, 9, 10, 12, 4};
 //        int[] nums = {1, 0, 5, 7, 9, 10, 12, 4, 24};
 //        int[] nums = {0,0,10,0,0,0,10,0,0,0};
+        int[] nums = {0,0,14,0,10,0,0,0};
         int result = t.findMinMoves(nums);
 
         System.out.println("result = " + result);

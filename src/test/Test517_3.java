@@ -110,6 +110,14 @@ public class Test517_3 {
         return result;
     }
 
+
+    public int solve2(List<Integer> queue) {
+        if (null == queue && queue.size() <= 2) return 0;
+
+        ListIterator<Integer> listIt = queue.listIterator();
+
+    }
+
     public static void main2(String[] args) {
         ArrayList<Integer> list = new ArrayList<>();
 //        list.addAll(Arrays.asList(97, 9, 22, 42, 12, 63, 24, 41));

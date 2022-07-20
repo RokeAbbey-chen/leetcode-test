@@ -38,7 +38,7 @@ public class Test517_3 {
                 exclusive = mac[i] - rest - avg;
 //                queue.add(exclusive);
                 queue.add(sum11 - rest);
-                int solveTimes = solve(queue);
+                int solveTimes = solve3(queue);
 //                System.out.println("result = " + result + ", solveTimes = " + solveTimes);
                 result = Math.max(result, solveTimes);
 //                System.out.println("result = " + result);
@@ -51,7 +51,7 @@ public class Test517_3 {
                 int rest = sum0 + sum00 - sum1 - sum11;
                 queue.add(sum00 - rest);
 //                queue.add(avg - rest - mac[i]);
-                int solveTimes = solve(queue);
+                int solveTimes = solve3(queue);
 //                System.out.println("result = " + result + ", solveTimes = " + solveTimes);
                 queue.clear();
                 result = Math.max(result, Math.max(solveTimes - rest0, exclusive) + rest0);
@@ -111,11 +111,66 @@ public class Test517_3 {
     }
 
 
-    public int solve2(List<Integer> queue) {
-        if (null == queue && queue.size() <= 2) return 0;
+    public int solve2(Node last) {
 
-        ListIterator<Integer> listIt = queue.listIterator();
+//        72, 53, 140, 55, 18, 36, 13, 99
+        Node cur = last;
+        int result = 0;
+//        System.out.println("deep *****************************");
+        while (null != cur.prev) {
+//            System.out.println("cur.v = " + cur.v);
+            Node prev = cur.prev;
+            if (cur.v <= prev.v) {
+                prev.v -= cur.v;
+                if (null != cur.next) {
+                    prev.v += cur.next.v;
+                    cur.next.next.prev = prev;
+                    cur.prev.next = cur.next.next;
+                }
+//                System.out.println("cur.v = " + cur.v + ", result = " + result);
+                return  cur.v + result; // cur.v + result; //Math.max(cur.v, result);
+            } else {
+//                System.out.println("cur.v = " + cur.v + ", cur.prev.v = " + cur.prev.v);
+                result += cur.prev.v; // Math.max(cur.prev.v, result);
+                cur.v -= cur.prev.v;
+                cur.prev.v = 0;
+                int v2 = solve2(cur.prev.prev);
+                result = Math.max(result, v2);
+//                System.out.println("v2 = " + v2 + ", result = " + result);
+            }
+//            System.out.println("loop ---");
 
+        }
+        return result;
+    }
+
+    public int solve3(List<Integer> queue) {
+        Node node = null;
+        for (Integer i : queue) {
+            if (null == node) {
+                node = new Node(i);
+            } else {
+                Node bro = new Node(i);
+                bro.prev = node;
+                node.next = bro;
+                node = bro;
+            }
+        }
+        return solve2(node);
+    }
+
+    static class Node {
+        Node prev;
+        Node next;
+        int v;
+        public Node(int v) {
+            this.v = v;
+        }
+
+        @Override
+        public String toString() {
+            return String.valueOf(v);
+        }
     }
 
     public static void main2(String[] args) {
@@ -129,6 +184,40 @@ public class Test517_3 {
 //        System.out.println(t.findMinMoves(list));
     }
 
+    public static void main3(String[] args) {
+//        List<Integer> list = new LinkedList<>();
+//        list.addAll(Arrays.asList(1, 2, 3, 4, 5));
+//        ListIterator<Integer> it = list.listIterator(list.size());
+//        while (it.hasPrevious()) {
+//            System.out.println(it.previous());
+//        }
+
+//        int a = 35326977;
+//        float b = (float)a;
+//        System.out.println("a = " + a);
+//        System.out.println("b = " + (int)b);
+
+        Node start = null;
+        Node node = start;
+//        int[] nums = {10, 5, 20, 8, 6, 23};
+        int[] nums = {72, 53, 140, 55, 18, 36, 13, 99};
+
+        for (int i : nums) {
+            if (null == start) {
+                start = new Node(i);
+                node = start;
+                continue;
+            }
+            Node bro = new Node(i);
+            bro.prev = node;
+            node.next = bro;
+            node = bro;
+        }
+
+        Test517_3 t = new Test517_3();
+        System.out.println(t.solve2(node));
+        System.out.println("----");
+    }
     public static void main(String[] args) {
         Test517_3 t = new Test517_3();
 //        int[] nums = {0, 3, 0};

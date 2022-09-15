@@ -46,12 +46,11 @@ public class Test546_5 {
                             result[i][j][k] = Math.max(result[i][j][k], result[i + 1][p - 1][1] + result[p][j][k + 1]);
                             maxScores = Math.max(result[i][j][k], maxScores);
                         }
-                    } else {
-                        for (int k = 1; k <= colorCount[color][i]; k++) {
-                            result[i][j][k] = Math.max(result[i][j][k], k * k + result[i + 1][j][1]);
-                            maxScores = Math.max(result[i][j][k], maxScores);
-                        }
                     }
+                }
+                for (int k = 1; k <= colorCount[color][i]; k++) {
+                    result[i][j][k] = Math.max(result[i][j][k], k * k + result[i + 1][j][1]);
+                    maxScores = Math.max(result[i][j][k], maxScores);
                 }
             }
         }
@@ -60,7 +59,7 @@ public class Test546_5 {
 
     public static void main(String[] args) {
 
-        Test546_4 t = new Test546_4();
+        Test546_5 t = new Test546_5();
 //        int[] boxes = {1, 3, 2, 2, 3, 2, 4, 5, 5, 4, 4, 4, 3, 2, 1, 1};
 //        1 + 1 + 1 +  4 + 16 + 16 + 9
 //        int[] boxes = {1, 3, 2, 2, 3, 2};

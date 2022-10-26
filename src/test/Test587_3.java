@@ -19,8 +19,7 @@ public class Test587_3 {
         int count = 1;
         while (true) {
             Set<Integer> bases = new HashSet<>();
-            int base = -1;
-            int k;
+            int k, base;
             for (k = 0; k < n && bVertex[k]; k ++);
             if (k >= n) break;
             base = k;
@@ -38,7 +37,6 @@ public class Test587_3 {
                     bases.add(i);
                     if(sqDis(trees[li], trees[base]) < sqDis(trees[li], trees[i])) {
                         base = i;
-//                        bases.add(base);
                     }
                 }
             }

@@ -35,8 +35,8 @@ public class Test629 {
 
     public static void main(String[] args) {
         Test629 test = new Test629();
-//        int result = test.kInversePairs(1000, 400);
-        int result = test.kInversePairs(100, 4);
+        int result = test.kInversePairs(1000, 1000);
+//        int result = test.kInversePairs(100, 4);
         System.out.println("result = " + result);
     }
 }

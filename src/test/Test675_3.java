@@ -2,99 +2,87 @@ package test;
 
 import java.util.*;
 
-public class Test675_2 {
-
-
+public class Test675_3 {
     public int cutOffTree(List<List<Integer>> forest) {
         int m = forest.size(), n = forest.get(0).size();
-        int[][] map = new int[m][n];
         TreeMap<Integer, Integer> where = new TreeMap<>();
+        int[][] map = new int[m][n];
         for (int i = 0; i < m; i ++) {
+            List<Integer> l = forest.get(i);
             for (int j = 0; j < n; j ++) {
-                map[i][j] = forest.get(i).get(j);
-                where.put(map[i][j], i * n + j);
+                int v = l.get(j);
+                map[i][j] = v;
+                where.put(v, i * n + j);
             }
         }
 
-        final int len = m * n, inf = Integer.MAX_VALUE;
-        long[][] dp = new long[len][len];
-        for (int i = 0; i < len; i ++) {
-            Arrays.fill(dp[i], inf);
-            dp[i][i] = 0;
-        }
-
-        for (int i = 0; i < m; i ++) {
-            for (int j = 0; j < n; j ++) {
-                find2(dp, map, i, j, m, n);
-            }
-        }
-        int cost = 0;
         int lastAt = 0;
+        int cost = 0;
         for (Map.Entry<Integer, Integer> ent: where.entrySet()) {
-            int k = ent.getKey();
-            int at = ent.getValue();
-            if (1 >= k)
+            int k = ent.getKey(), at = ent.getValue();
+            if (k <= 1) {
                 lastAt = 0;
-            else if (inf == dp[lastAt][at])
-                return -1;
-            else {
-//                System.out.println("k = " + k + ", " + lastAt + " -> " + at + " = " + dp[lastAt][at]);
-                System.out.println(lastAt + " -> " + at + " = " + dp[lastAt][at]);
-                cost += dp[lastAt][at];
-                lastAt = at;
+                continue;
             }
-
+            int dis = find(lastAt, at, map);
+            if (-1 == dis) return -1;
+//            System.out.println(lastAt + " -> " + at + " = " + dis);
+            cost += dis;
+            lastAt = at;
         }
         return cost;
+
     }
 
-    public void find2(long[][] dp, int[][] map, int startR, int startC, int m, int n) {
-        if (0 == map[startR][startC]) return;
-        final int inf = Integer.MAX_VALUE;
-        int[][] queue = new int[2][m * n];
-        int head = 0, tail;
-        boolean[] traveled = new boolean[m * n];
-        int oIndex =  startR * n + startC;
-        queue[0][0] = oIndex;
-        queue[1][0] = 0;
-        traveled[oIndex] = true;
-        tail = 0;
-        for (; head <= tail; head ++) {
-            int index = queue[0][head];
-            int d = queue[1][head];
-            dp[oIndex][index] = dp[index][oIndex] = d;
-            int[] q = findNeighbor(map, index / n, index % n, m, n);
-            for (int i = 0; i < q.length; i ++) {
-                if (-1 == q[i]) break;
-                int neiIndex = q[i];
-                if (traveled[neiIndex]) continue;
-                queue[0][1 + tail] = neiIndex;
-                queue[1][1 + tail] = d + 1;
-                traveled[neiIndex] = true;
-                tail ++;
+    private int find(int from, int to, int[][] map) {
+        int m = map.length, n = map[0].length;
+        int inf = Integer.MAX_VALUE;
+
+        int[] traveled = new int[m * n];
+        PriorityQueue<int[]> queue = new PriorityQueue<>((o0, o1)->{
+            int r0 = o0[0] / n, c0 = o0[0] % n, d0 = o0[1];
+            int r1 = o1[0] / n, c1 = o1[0] % n, d1 = o1[1];
+            int rt = to / n, ct = to % n;
+            int dr0 = Math.abs(rt - r0);
+            int dc0 = Math.abs(ct - c0);
+            int dr1 = Math.abs(rt - r1);
+            int dc1 = Math.abs(ct - c1);
+            if (dr0 + dc0 + d0 < dr1 + dc1 + d1) return -1;
+            if (dr0 + dc0 + d0 > dr1 + dc1 + d1) return 1;
+            return 0;
+        });
+        queue.add(new int[]{from, 0});
+        Arrays.fill(traveled, inf);
+        traveled[from] = 0;
+        int[][] offset = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+        while (!queue.isEmpty()) {
+            int[] node = queue.poll();
+            if (to == node[0]) return node[1];
+            int r = node[0] / n, c = node[0] % n;
+            int d = node[1];
+
+            for (int i = 0; i < 4; i ++) {
+                int r2 = r + offset[i][0];
+                int c2 = c + offset[i][1];
+                int p = r2 * n + c2;
+                if (r2 < 0 || c2 < 0 || r2 >= m || c2 >= n || 0 == map[r2][c2])
+                    continue;
+                if (traveled[p] <= d + 1) continue;
+                traveled[p] = d + 1;
+                queue.add(new int[]{p, d + 1});
+
             }
         }
-
+        return -1;
     }
 
-    public int[] findNeighbor(int[][] map, int row, int col, int m, int n) {
-//        LinkedList<int[]> q = new LinkedList<>();
-        int[] q = {-1, -1, -1, -1};
-        int head = 0;
-        final int[][] offset = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
-
-        for (int i = 0; i < 4; i ++) {
-            int r = row + offset[i][0];
-            int c = col + offset[i][1];
-            if (r >= 0 && r < m && c >= 0 && c < n && 0 != map[r][c]) {
-                q[head++] = r * n + c;
-            }
-        }
-        return q;
+    public static int mhd(int at0, int at1, int m, int n) {
+        int r0 = at0 / n, c0 = at0 % n;
+        int r1 = at1 / n, c1 = at1 % n;
+        return Math.abs(r0 - r1) + Math.abs(c0 - c1);
     }
-
     public static void main(String[] args) {
-        Test675_2 test = new Test675_2();
+        Test675_3 test = new Test675_3();
 
         int[][] f2 = {
                 {1, 2, 3},
@@ -140,5 +128,4 @@ public class Test675_2 {
         int result = test.cutOffTree(forest);
         System.out.println("result:" + result);
     }
-
 }

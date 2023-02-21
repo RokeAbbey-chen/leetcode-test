@@ -132,6 +132,7 @@ public class Test732 {
         for (int i = 0; i < nums.length; i ++) {
             System.out.println(test.book(nums[i][0], nums[i][1]));
         }
+        
     }
 
 }
